@@ -77,55 +77,49 @@ function getFullNumberAt (x,y) {
 // Solve part 2 by looking for '*' gears with exactly 2 numbers adjacent to them and summing the "gear powers" i.e. those 2 numbers multiplied on valid gears
 function findGearRatios () {
 	let totalGearPowers = 0;
+	let totalValidGears = 0;
+	let invalidGears = 0;
 	
 	for(let y = 0; y < gridHeight; y++) {
 		for(let x = 0; x < gridWidth; x++) {
 			// check if it is a gear
 			if(schematic[y][x] == '*'){
-				//console.log(`Gear at ${x} , ${y}`);
 				let surroundingNumbers = [];
 				// And now we madly check for numbers around it and push them to an array
 				const topNumber = getFullNumberAt(x,y - 1);
-				//console.log(`topNumber ${topNumber}`);
 				if(!topNumber){
 					const leftTopNumber = getFullNumberAt(x - 1, y - 1);
-					//console.log(`topLeftNumber ${leftTopNumber}`);
 					if(leftTopNumber)surroundingNumbers.push(leftTopNumber);
 					const rightTopNumber = getFullNumberAt(x + 1, y - 1);
-					//console.log(`rightTopNumber ${rightTopNumber}`);
 					if(rightTopNumber)surroundingNumbers.push(rightTopNumber);
 				}else{
 					surroundingNumbers.push(topNumber);
 				}
 				const leftNumber = getFullNumberAt(x - 1,y);
-				//console.log(`leftNumber ${leftNumber}`);
 				if(leftNumber)surroundingNumbers.push(leftNumber);
 				const rightNumber = getFullNumberAt(x + 1,y);
-				//console.log(`rightNumber ${rightNumber}`);
 				if(rightNumber)surroundingNumbers.push(rightNumber);
 				const bottomNumber = getFullNumberAt(x,y + 1);
-				//console.log(`bottom number ${bottomNumber}`);
 				if(!bottomNumber){
 					const leftBottomNumber = getFullNumberAt(x - 1, y + 1);
-					//console.log(`leftBottomNumber ${leftBottomNumber}`);
 					if(leftBottomNumber)surroundingNumbers.push(leftBottomNumber);
 					const rightBottomNumber = getFullNumberAt(x + 1, y + 1);
-					//console.log(`rightBottomNumber ${rightBottomNumber}`);
 					if(rightBottomNumber)surroundingNumbers.push(rightBottomNumber);
 				}else{
 					surroundingNumbers.push(bottomNumber);
 				}
 				
 				if(surroundingNumbers.length == 2){
-					//console.log("success, add m'up");
+					totalValidGears += 1;
 					totalGearPowers += surroundingNumbers[0] * surroundingNumbers[1];
 				}else{
-					//console.log("skipping this gear! Bad!");
-					//console.log(`incorrect powers, reading: `,surroundingNumbers);
+					invalidGears += 1;
 				}
 			}
 		}
 	}
+	console.log("Invalid gears: " + invalidGears);
+	console.log("Valid gears: " + totalValidGears);
 	
 	return totalGearPowers;
 }
