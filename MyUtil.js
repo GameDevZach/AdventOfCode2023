@@ -14,3 +14,7 @@ exports.ProcessLineByLine = async function ProcessLineByLine(filename, callback)
 		callback(line);
 	}
 }
+
+exports.GetNumbersFromString = function getNumbersFromString(str){
+	return str.split(' ').map((a)=>(+a)).filter((a)=>(Number.isInteger(a)));
+}

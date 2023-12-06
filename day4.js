@@ -45,6 +45,7 @@ function partOne(line){
 
 // 
 function partTwo(){
+	console.time("P2 Time");
 	for(let i = 0; i < cards.length; i++){
 		//console.log(`Card ${i+1} had ${cards[i].matches}... and there were ${cards[i].quantity} of that card now.`);
 		for(let j = 0; j < cards[i].matches; j++){
@@ -53,6 +54,7 @@ function partTwo(){
 	}
 	
 	totalCardQuantity = cards.reduce((accumulator, card) => (accumulator + card.quantity), 0); 
+	console.timeEnd("P2 Time");
 }
 
 async function solver(){
